@@ -1,0 +1,15 @@
+# Google Apps Script related files
+.clasp.json
+appsscript.json
+
+# For TypeScript development
+node_modules/
+dist/
+*.ts
+
+# macOS and editor settings
+Thumbs.db
+.vscode/
+
+# Environment variables and secret information
+.env
