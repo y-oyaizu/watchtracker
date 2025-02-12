@@ -133,12 +133,15 @@ function extractWatchHistoryFromSharedZip(zipFileName) {
         }
 
         jsonBlob = jsonBlob.setName(getCurrentDate() + '_watch-history.json');
-        targetFolder.createFile(jsonBlob);
+        const jsonFile = targetFolder.createFile(jsonBlob);
         console.log(`✅ ${getCurrentDate()}_watch-history.json saved to ${targetFolder.getName()}`);
 
         // 6️⃣ Delete copied ZIP if needed
         copiedZipFile.setTrashed(true);
         console.log(`🗑 Deleted copied ZIP from ${targetFolder.getName()}`);
+
+        // 7️⃣ Return the ID of the extracted JSON file
+        return jsonFile.getId();
 
     } catch (error) {
         console.error(`❌ Error extracting watch-history.json: ${error.message}`);

@@ -14,9 +14,21 @@ function main() {
   console.log(`📂 Found ZIP: ${latestZip}`);
   console.log("📦 Extracting watch-history.json...");
 
-  extractWatchHistoryFromSharedZip(latestZip); // ZIP を解凍 & `watch-history.json` を移動
+  const jsonFileId = extractWatchHistoryFromSharedZip(latestZip); // ZIP を解凍 & JSONのファイルID取得
 
   console.log("✅ Extraction process completed!");
+
+  if (!jsonFileId) {
+    console.error("❌ Failed to extract watch-history.json");
+    return;
+  }
+
+  console.log(`✅ Extracted watch-history.json with File ID: ${jsonFileId}`);
+  console.log("📊 Importing data into Google Spreadsheet...");
+
+  importWatchHistory(jsonFileId); // JSONをスプレッドシートに転記
+
+
 }
 
 
