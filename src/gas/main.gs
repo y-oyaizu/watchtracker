@@ -26,7 +26,13 @@ function main() {
   console.log(`✅ Extracted watch-history.json with File ID: ${jsonFileId}`);
   console.log("📊 Importing data into Google Spreadsheet...");
 
-  importWatchHistory(jsonFileId); // JSONをスプレッドシートに転記
+  const {spreadsheetUrl, sheetName} = importWatchHistory(jsonFileId); // JSONをスプレッドシートに転記
+
+  let watchHistory = getWatchHistoryFromSheet(spreadsheetUrl, sheetName);
+  let watchTimeData = calculateWatchTime(watchHistory);
+
+  console.log("📊 Watch time data successfully aggregated:");
+  console.log(watchTimeData);
 
 
 }

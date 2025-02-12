@@ -1,5 +1,5 @@
 function importWatchHistory(jsonFileId) {
-  var sheetName = getCurrentDate().replace(/-/g, "_"); // set sheet name as current date
+  var sheetName = "rawData"; // set sheet name
 
   var ss = getOrCreateSpreadsheet();
   var sheet = getOrCreateSheet(ss, sheetName);
@@ -42,13 +42,21 @@ function getOrCreateSpreadsheet() {
 
 function getOrCreateSheet(ss, sheetName) {
   var sheet = ss.getSheetByName(sheetName);
-  if (!sheet) {
-    sheet = ss.insertSheet(sheetName);
+
+    if (sheet) {
+        sheet.clear();
+        Logger.log(`📄 Existing sheet '${sheetName}' found. Data cleared.`);
+    } else {
+        sheet = ss.insertSheet(sheetName);
+        Logger.log(`🆕 New sheet '${sheetName}' created.`);
+    }
+
     var headers = ["Title", "Channel Name", "Channel URL", "Original Time",
-                   "Chicago Time", "Year", "Month", "Day", "Hour", "Minutes", "Time Diff (min)","Estimated Watch Time (min)", "Session ID"];
+                   "Chicago Time", "Year", "Month", "Day", "Hour", "Minutes",
+                   "Time Diff (min)", "Estimated Watch Time (min)", "Session ID"];
     sheet.appendRow(headers);
-  }
-  return sheet;
+
+    return sheet;
 }
 
 function getJsonData(fileId) {
