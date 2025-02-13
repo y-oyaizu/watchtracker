@@ -36,4 +36,6 @@ function main() {
 
   let fileId = generateBarChart(watchTimeData.dailyWatchTime);
 
+  sendEmail(fileId,watchTimeData)
+
 }
