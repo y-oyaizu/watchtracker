@@ -34,34 +34,6 @@ function main() {
   console.log("📊 Watch time data successfully aggregated:");
   console.log(watchTimeData);
 
+  let fileId = generateBarChart(watchTimeData.dailyWatchTime);
 
 }
-
-
-// const historyFilePath = `watch-history-${getCurrentMonth()}.json`;
-// const watchHistory = loadHistory(historyFilePath);
-// ================================
-// // If no watch history is found, print an error message and exit the script
-// if (watchHistory.length === 0) {
-//   console.error("No watch history found.");
-//   process.exit(1);
-// }
-// // Generate a report containing aggregated watch history data
-// const report = {
-//   totalWatchCount: getTotalWatchCount(watchHistory),
-//   watchByChannel: getWatchByChannel(watchHistory),
-//   watchByDate: getWatchByDate(watchHistory),
-// };
-// // Update the spreadsheet with the watch history data
-// writeToSheet(watchHistory).then(() => {
-//   console.log("📊 Spreadsheet update complete");
-//   // Send an email report
-//   const recipient = "your_email@example.com";
-//   const subject = `[YouTube Watch History Report] Analysis for ${getCurrentMonth()}`;
-//   const body = `
-//   📊 Total Watch Count: ${report.totalWatchCount}
-//   🎥 Watch Count by Channel: ${JSON.stringify(report.watchByChannel, null, 2)}
-//   📅 Watch Count by Date: ${JSON.stringify(report.watchByDate, null, 2)}
-//   `;
-//   sendEmail(recipient, subject, body);
-// });
