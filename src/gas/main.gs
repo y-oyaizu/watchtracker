@@ -4,7 +4,7 @@
 function main() {
   console.log("🔍 Searching for the latest ZIP file...");
 
-  const latestZip = getLatestZipInSharedFolder(); // utils.js の関数をそのまま使う
+  const latestZip = getLatestZipInSharedFolder();
 
   if (!latestZip) {
     console.error("❌ No ZIP file found in Shared with me.");
@@ -14,7 +14,7 @@ function main() {
   console.log(`📂 Found ZIP: ${latestZip}`);
   console.log("📦 Extracting watch-history.json...");
 
-  const jsonFileId = extractWatchHistoryFromSharedZip(latestZip); // ZIP を解凍 & JSONのファイルID取得
+  const jsonFileId = extractWatchHistoryFromSharedZip(latestZip); // extract json file from zip
 
   console.log("✅ Extraction process completed!");
 
@@ -26,7 +26,7 @@ function main() {
   console.log(`✅ Extracted watch-history.json with File ID: ${jsonFileId}`);
   console.log("📊 Importing data into Google Spreadsheet...");
 
-  const {spreadsheetUrl, sheetName} = importWatchHistory(jsonFileId); // JSONをスプレッドシートに転記
+  const {spreadsheetUrl, sheetName} = importWatchHistory(jsonFileId); // transform json to sheet
 
   let watchHistory = getWatchHistoryFromSheet(spreadsheetUrl, sheetName);
   let watchTimeData = calculateWatchTime(watchHistory);

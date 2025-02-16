@@ -28,13 +28,14 @@ function analyzeWatchHistory(watchHistory) {
                `- Harmful (Level 4): ${analysisResult.riskCounts["4 (Harmful)"]} videos\n\n`;
 
   if (analysisResult.harmfulTitles.length > 0) {
-    report += "⚠️ Harmful videos detected:\n" + analysisResult.harmfulTitles.join("\n") + "\n";
+    report += "Potentially harmful videos detected (Level 3 & 4):\n" + analysisResult.harmfulTitles.join("\n") + "\n";
   } else {
     report += "✅ No harmful videos detected.\n";
   }
 
   return report;
 }
+
 
 function analyzeWithOpenAI(titles, birthYearMonth) {
   var apiKey = PropertiesService.getScriptProperties().getProperty("OPENAI_API_KEY");
@@ -92,7 +93,10 @@ function analyzeWithOpenAI(titles, birthYearMonth) {
 
       if (riskLevel === "1") riskCounts["1 (Safe)"]++;
       else if (riskLevel === "2") riskCounts["2 (Mildly inappropriate)"]++;
-      else if (riskLevel === "3") riskCounts["3 (Potentially harmful)"]++;
+      else if (riskLevel === "3") {
+        riskCounts["3 (Potentially harmful)"]++;
+        harmfulTitles.push(title);
+      }
       else if (riskLevel === "4") {
         riskCounts["4 (Harmful)"]++;
         harmfulTitles.push(title);
@@ -100,7 +104,7 @@ function analyzeWithOpenAI(titles, birthYearMonth) {
 
       analyzedResults.push({ title, riskLevel });
 
-      Utilities.sleep(500); // 負荷軽減のため待機
+      Utilities.sleep(500);
 
     } catch (e) {
       Logger.log("❌ OpenAI API Request Failed: " + e.toString());
