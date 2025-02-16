@@ -56,30 +56,6 @@ function generateBarChart(dailyWatchTime) {
 }
 
 /**
- * Gets the current date in YYYY-MM-DD format.
- */
-function getCurrentDate() {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-}
-
-/**
- * Finds or creates a folder by name.
- */
-function getOrCreateFolder(folderName) {
-  var folders = DriveApp.getFoldersByName(folderName);
-  return folders.hasNext() ? folders.next() : DriveApp.createFolder(folderName);
-}
-
-/**
- * Finds or creates a subfolder inside a given parent folder.
- */
-function getOrCreateFolderInParent(parentFolder, subFolderName) {
-  var folders = parentFolder.getFoldersByName(subFolderName);
-  return folders.hasNext() ? folders.next() : parentFolder.createFolder(subFolderName);
-}
-
-/**
  * Converts "Xh Ym" format to minutes.
  */
 function parseWatchTime(timeString) {

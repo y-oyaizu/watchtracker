@@ -1,13 +1,5 @@
 "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
-// exports.getCurrentMonth = getCurrentMonth;
-// exports.getCurrentDate = getCurrentDate;
-// exports.getLatestZipInSharedFolder = getLatestZipInSharedFolder;
-// exports.extractWatchHistoryFromSharedZip = extractWatchHistoryFromSharedZip;
-// function getCurrentMonth() {
-//     const now = new Date();
-//     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-// }
+
 function getCurrentDate() {
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -146,4 +138,41 @@ function extractWatchHistoryFromSharedZip(zipFileName) {
     } catch (error) {
         console.error(`❌ Error extracting watch-history.json: ${error.message}`);
     }
+}
+
+/**
+ * Finds or creates a folder by name.
+ */
+function getOrCreateFolder(folderName) {
+  var folders = DriveApp.getFoldersByName(folderName);
+  return folders.hasNext() ? folders.next() : DriveApp.createFolder(folderName);
+}
+
+/**
+ * Finds or creates a subfolder inside a given parent folder.
+ */
+function getOrCreateFolderInParent(parentFolder, subFolderName) {
+  var folders = parentFolder.getFoldersByName(subFolderName);
+  return folders.hasNext() ? folders.next() : parentFolder.createFolder(subFolderName);
+}
+
+/**
+ * Saves a file to Google Drive, updating it if it already exists.
+ * @param {string} folderName - The name of the folder in Google Drive.
+ * @param {string} fileName - The name of the file to save.
+ * @param {string} content - The content to save (JSON, text, etc.).
+ * @param {string} mimeType - The MIME type of the file (default: `MimeType.PLAIN_TEXT`).
+ */
+function saveFileToDrive(folderName, fileName, content, mimeType = "application/json") {
+  var folder = getOrCreateFolder(folderName);
+  var fileIterator = folder.getFilesByName(fileName);
+
+  if (fileIterator.hasNext()) {
+    var existingFile = fileIterator.next();
+    existingFile.setContent(content);
+    Logger.log(`✅ Updated existing file: ${fileName}`);
+  } else {
+    folder.createFile(fileName, content, mimeType);
+    Logger.log(`✅ Created new file: ${fileName}`);
+  }
 }

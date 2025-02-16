@@ -14,26 +14,24 @@ function sendEmail(fileId, watchData, overView = "Nothing to worry about, yeah!"
 
   var body = "Here is your latest YouTube watch time report.\n";
   body += "Period: " + startDate + " - " + endDate + "\n\n";
-  body += "====================\n";
-  body += "** Total Watch Time: " + watchData.totalWatchTime + "\n";
-  body += "====================\n\n";
+  body += "=======================\n";
+  body += " Total Watch Time: " + watchData.totalWatchTime + "\n";
+  body += "=======================\n\n";
 
-  body += "** Overview:\n";
+  body += "■■■ Overview:\n";
   body += overView + "\n";
 
-  body += "\n";
-
-  body += "** Top 10 Most-Watched Channels:\n";
+  body += "■■■ Top 10 Most-Watched Channels:\n";
   for (var channel in watchData.channelWatchTime) {
     body += "- " + channel + ": " + watchData.channelWatchTime[channel] + "\n";
   }
   body += "\n";
 
-  body += "** Daily Watch Time:\n";
-  body += "date: total watch time : start time\n"
+  body += "■■■ Daily Watch Time:\n";
+  body += "Date: TotalWatchTime (StartTime)\n"
   for (var date in watchData.dailyWatchTime) {
     var watchDetail = watchData.dailyWatchTime[date];
-    body += "- " + date + ": " + watchDetail[0] + " : " + watchDetail[1] + ")\n";
+    body += "- " + date + ": " + watchDetail[0] + " (" + watchDetail[1] + ")\n";
   }
   body += "\n";
 

@@ -21,8 +21,6 @@ function sendEmail(fileId, watchData, overView = "Nothing to worry about, yeah!"
   body += "■■■ Overview:\n";
   body += overView + "\n";
 
-  body += "\n";
-
   body += "■■■ Top 10 Most-Watched Channels:\n";
   for (var channel in watchData.channelWatchTime) {
     body += "- " + channel + ": " + watchData.channelWatchTime[channel] + "\n";
