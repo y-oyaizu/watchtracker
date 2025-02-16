@@ -34,8 +34,12 @@ function main() {
   console.log("📊 Watch time data successfully aggregated:");
   console.log(watchTimeData);
 
+  let analyzedContentReport = analyzeWatchHistory(watchHistory);
+  console.log("📊 Analyzed Content Report:");
+
   let fileId = generateBarChart(watchTimeData.dailyWatchTime);
 
-  sendEmail(fileId,watchTimeData)
+  sendEmail(fileId,watchTimeData,analyzedContentReport);
+  console.log("📧 Email sent with the report!");
 
 }
